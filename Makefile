@@ -32,5 +32,8 @@ ps:
 mysql:
 	docker exec -it $$(docker ps -qf "name=mysql") mysql -uroot -p$$(grep MYSQL_ROOT_PASSWORD $(ENV_FILE) | cut -d '=' -f2) sftp_index
 
+indexer:
+	docker exec -it $$(docker ps -qf "name=name-hasher-python-app-run") /bin/sh
+
 status:
 	$(DOCKER_COMPOSE) ps

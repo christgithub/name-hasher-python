@@ -4,8 +4,8 @@ services:
     ports:
       - "2222:22"
     volumes:
-      - sftp_upload:/home/devuser/upload
-    command: devuser:devpass:1001
+      - ./sftp_upload:/home/devuser/upload
+    command: devuser:devpass:::upload
 
   mysql:
     image: mysql:8.0

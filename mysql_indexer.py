@@ -20,14 +20,13 @@ class MySQLIndexer:
             CREATE TABLE IF NOT EXISTS file_hashes (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 filename TEXT,
-                original_line TEXT,
                 hash_value VARCHAR(64)
             )
         """)
 
     def insert_record(self, doc):
-        sql = "INSERT INTO file_hashes (filename, original_line, hash_value) VALUES (%s, %s, %s)"
-        values = (doc["filename"], doc["original"], doc["hash"])
+        sql = "INSERT INTO file_hashes (filename, hash_value) VALUES (%s, %s)"
+        values = (doc["filename"], doc["hash"])
         self.cursor.execute(sql, values)
         self.conn.commit()
 
