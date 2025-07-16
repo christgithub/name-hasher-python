@@ -61,7 +61,6 @@ def main():
     indexer.close()
     logging.info(f"✅ Indexed {indexCounter} row(s) into MySQL")
     logging.info("🏁 Process ran successfully.")
-    time.sleep(120)
 
 if __name__ == "__main__":
     main()
