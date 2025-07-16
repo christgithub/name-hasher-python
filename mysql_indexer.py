@@ -1,16 +1,31 @@
+import time
 import mysql.connector
+from mysql.connector import Error
 
 class MySQLIndexer:
-    def __init__(self, host="localhost", user="root", password="", database="sftp_index"):
-        self.conn = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password
-        )
-        self.cursor = self.conn.cursor()
-        self.create_database(database)
-        self.conn.database = database
-        self.create_table()
+    def __init__(self, host="localhost", user="root", password="", database="sftp_index", retries=10, delay=3):
+        self.conn = None
+        self.cursor = None
+
+        for attempt in range(retries):
+            try:
+                self.conn = mysql.connector.connect(
+                    host=host,
+                    user=user,
+                    password=password
+                )
+                if self.conn.is_connected():
+                    print(f"✅ Connected to MySQL on attempt {attempt + 1}")
+                    self.cursor = self.conn.cursor()
+                    self.create_database(database)
+                    self.conn.database = database
+                    self.create_table()
+                    return
+            except Error as e:
+                print(f"⏳ Waiting for MySQL... ({attempt + 1}/{retries}): {e}")
+                time.sleep(delay)
+
+        raise RuntimeError("❌ Could not connect to MySQL after multiple attempts")
 
     def create_database(self, db_name):
         self.cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name}")
