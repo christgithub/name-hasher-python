@@ -25,6 +25,7 @@ restart: down up
 
 clean:
 	$(DOCKER_COMPOSE) down -v
+	rm -rf ./downloads
 
 ps:
 	$(DOCKER_COMPOSE) ps
