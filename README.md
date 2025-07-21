@@ -15,6 +15,7 @@ This will open a prompt in the running MySQL container
 Type "select * from file_hashes limit 10;"
 A similar output is displayed, showing the first 10 rows of hashed names and and their source file
 
+```
 mysql> select * from file_hashes limit 10;
 +----+----------------------+------------------------------------------------------------------+
 | id | filename             | hash_value                                                       |
@@ -31,7 +32,7 @@ mysql> select * from file_hashes limit 10;
 | 10 | downloads/input2.txt | 8f67993675868c162fb62c38b1771ead36bfdae544fa540cf13f22a75bdeaa75 |
 +----+----------------------+------------------------------------------------------------------+
 10 rows in set (0.00 sec)
-
+```
   
 
 
