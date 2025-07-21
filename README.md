@@ -2,17 +2,26 @@
 ETL pipeline hashing strings and indexing result in MySQL
 
 To build and bring the containers up
-- make up
+```
+make up
+```
 
 To run the program
-- make run
+```
+make run
+```
 
 After the program has run, at the prompt type:
-- make mysql
+```
+make mysql
+```
 
 This will open a prompt in the running MySQL container
 
-Type "select * from file_hashes limit 10;"
+Enter 
+```
+select * from file_hashes limit 10;
+```
 A similar output is displayed, showing the first 10 rows of hashed names and and their source file
 
 ```
