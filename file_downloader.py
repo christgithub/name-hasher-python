@@ -1,7 +1,7 @@
 import paramiko
 import os
 
-class SFTPClient:
+class FileDownloader:
     def __init__(self, host, port, username, password, download_dir="downloads"):
         self.__host = host
         self.__port = port
@@ -10,6 +10,7 @@ class SFTPClient:
         self.__download_dir = download_dir
         os.makedirs(download_dir, exist_ok=True)
 
+    # Set up connection to sftp server
     def connect(self):
         try:
             self.transport = paramiko.Transport((self.__host, self.__port))
@@ -18,11 +19,13 @@ class SFTPClient:
         except Exception as e:
             raise RuntimeError(f"❌ Failed to connect to sftp server: {e}")
 
+    # Download all files from sftp upload directory to local directory
     def download_files(self, remote_dir="upload"): 
         try:
             files = self.sftp.listdir(remote_dir)
             downloaded = []
         
+            # Iterates through the files in the remote folder
             for filename in files:
                 remote_path = f"{remote_dir}/{filename}"
                 local_path = os.path.join(self.__download_dir, filename)

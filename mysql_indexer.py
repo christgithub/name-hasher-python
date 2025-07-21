@@ -39,11 +39,14 @@ class MySQLIndexer:
             )
         """)
 
-    def insert_record(self, doc):
-        sql = "INSERT INTO file_hashes (filename, hash_value) VALUES (%s, %s)"
-        values = (doc["filename"], doc["hash"])
-        self.cursor.execute(sql, values)
-        self.conn.commit()
+    def insert_record(self, file_name, hash_value):
+        try:
+            with self.conn.cursor() as cursor:
+                query = "INSERT INTO file_hashes (filename, hash_value) VALUES (%s, %s)"
+                cursor.execute(query, (file_name, hash_value))
+            self.conn.commit()
+        except Exception as e:
+            raise RuntimeError(f"❌ Failed to insert into MySQL: {e}")
 
     def close(self):
         self.cursor.close()
